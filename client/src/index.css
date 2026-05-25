@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Poppins";
+  src: url(../expense-tracker-client/fonts/Poppins/Poppins-Regular.ttf)
+    format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Poppins-bolder";
+  src: url(../expense-tracker-client/fonts/Poppins/Poppins-ExtraBold.ttf)
+    format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url(../expense-tracker-client/fonts/Inter-Regular.otf) format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+:root {
+  --app-bg: #0f172a;
+  --card-bg: #1e293b;
+  --primary: #6366f1;
+  --income: #10b981;
+  --expense: #ef4444;
+  --warning: #f59e0b;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--app-bg);
+  color: #ffffff;
+  font-family: "Poppins", sans-serif;
+  line-height: 1.2;
+}
+
+header Button {
+  font-weight: bold;
+}
+
+header Button:last-child {
+  box-shadow: 4px 2px 2px rgba(0, 0, 0, 0.45);
+}
+
+.hero-cta Button {
+  font-weight: bold;
+}
+
+.hero-text h1 {
+  font-family: "Poppins-bolder";
+  line-height: 1.3;
+}
+
+.cta-footer,
+.features {
+  box-shadow: -1px 1px 1px rgba(0, 0, 0, 0.45);
+}
+
+.cta-footer Button {
+  box-shadow: -2px 1px 1px rgba(255, 255, 255, 0.45);
+}
+
+.amount {
+  letter-spacing: 2px;
+}

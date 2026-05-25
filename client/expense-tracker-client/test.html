@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SpendWise — Auth Pages</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --app-bg: #0f172a;
+    --card-bg: #1e293b;
+    --card-border: rgba(255,255,255,0.06);
+    --primary: #6366f1;
+    --primary-hover: #4f52d9;
+    --primary-glow: rgba(99,102,241,0.25);
+    --income: #10b981;
+    --expense: #ef4444;
+    --warning: #f59e0b;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --text-muted: #475569;
+    --input-bg: #0f172a;
+    --input-border: rgba(255,255,255,0.08);
+    --input-border-focus: rgba(99,102,241,0.6);
+    --font: 'Sora', sans-serif;
+  }
+
+  body {
+    font-family: var(--font);
+    background: var(--app-bg);
+    color: var(--text-primary);
+    min-height: 100vh;
+  }
+
+  /* ── PAGE SWITCHER (demo only) ── */
+  .page-tabs {
+    display: flex;
+    gap: 0;
+    justify-content: center;
+    padding: 1.25rem 1rem 0;
+    position: relative;
+    z-index: 10;
+  }
+  .tab-btn {
+    background: var(--card-bg);
+    border: 0.5px solid var(--card-border);
+    color: var(--text-secondary);
+    font-family: var(--font);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px 24px;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.02em;
+  }
+  .tab-btn:first-child { border-radius: 8px 0 0 8px; }
+  .tab-btn:last-child  { border-radius: 0 8px 8px 0; }
+  .tab-btn.active {
+    background: var(--primary);
+    color: #fff;
+    border-color: var(--primary);
+  }
+  .tab-btn:not(.active):hover {
+    color: var(--text-primary);
+    background: rgba(255,255,255,0.05);
+  }
+
+  /* ── PAGES ── */
+  .page { display: none; animation: fadeIn 0.3s ease; }
+  .page.active { display: flex; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── AUTH LAYOUT ── */
+  .auth-layout {
+    min-height: calc(100vh - 56px);
+    display: flex;
+    align-items: stretch;
+  }
+
+  /* Left panel */
+  .auth-panel-left {
+    width: 45%;
+    background: linear-gradient(135deg, #1f2750 0%, #17203f 50%, #10182c 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 3rem 3.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .auth-panel-left::before {
+    content: '';
+    position: absolute;
+    top: -120px; right: -120px;
+    width: 380px; height: 380px;
+    background: radial-gradient(circle, rgba(99,102,241,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .auth-panel-left::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: -80px;
+    width: 280px; height: 280px;
+    background: radial-gradient(circle, rgba(16,185,129,0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .brand-lockup {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .brand-icon {
+    width: 40px; height: 40px;
+    background: var(--primary);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 700; color: #fff;
+    letter-spacing: -0.05em;
+  }
+  .brand-name {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+  }
+
+  .panel-hero {
+    position: relative; z-index: 1;
+  }
+  .panel-hero h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.25;
+    letter-spacing: -0.03em;
+    margin-bottom: 1rem;
+  }
+  .panel-hero h2 span {
+    color: var(--primary);
+    position: relative;
+  }
+  .panel-hero p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 320px;
+  }
+
+  .panel-stats {
+    display: flex;
+    gap: 1rem;
+    position: relative; z-index: 1;
+  }
+  .stat-chip {
+    background: rgba(255,255,255,0.05);
+    border: 0.5px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 12px 16px;
+    flex: 1;
+  }
+  .stat-chip-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 4px;
+  }
+  .stat-chip-value {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+  }
+  .stat-chip-value.green { color: var(--income); }
+
+  /* Right panel — form */
+  .auth-panel-right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 2rem;
+    background: var(--app-bg);
+  }
+
+  .auth-form-card {
+    width: 100%;
+    max-width: 420px;
+  }
+
+  .form-heading {
+    margin-bottom: 2rem;
+  }
+  .form-heading h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.03em;
+    margin-bottom: 6px;
+  }
+  .form-heading p {
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+
+  /* Form fields */
+  .field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 1.5rem;
+  }
+  .field-row { display: flex; gap: 12px; }
+  .field-row .field { flex: 1; }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .field label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    letter-spacing: 0.02em;
+  }
+  .field-input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .field-input-wrap .icon {
+    position: absolute;
+    left: 14px;
+    color: var(--text-muted);
+    font-size: 15px;
+    pointer-events: none;
+  }
+  .field input {
+    width: 100%;
+    background: var(--input-bg);
+    border: 0.5px solid var(--input-border);
+    border-radius: 10px;
+    color: var(--text-primary);
+    font-family: var(--font);
+    font-size: 13.5px;
+    padding: 11px 14px 11px 40px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .field input::placeholder { color: var(--text-muted); font-size: 13px; }
+  .field input:focus {
+    border-color: var(--input-border-focus);
+    box-shadow: 0 0 0 3px var(--primary-glow);
+  }
+
+  .eye-toggle {
+    position: absolute;
+    right: 12px;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 14px;
+    padding: 4px;
+    transition: color 0.15s;
+  }
+  .eye-toggle:hover { color: var(--text-secondary); }
+
+  /* Password strength (signup only) */
+  .strength-bar {
+    display: flex;
+    gap: 4px;
+    margin-top: 6px;
+  }
+  .strength-segment {
+    height: 3px;
+    flex: 1;
+    border-radius: 99px;
+    background: rgba(255,255,255,0.08);
+    transition: background 0.3s;
+  }
+  .strength-segment.active-weak   { background: var(--expense); }
+  .strength-segment.active-ok     { background: var(--warning); }
+  .strength-segment.active-strong { background: var(--income); }
+
+  /* Divider */
+  .or-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 1.25rem;
+  }
+  .or-divider span {
+    font-size: 12px;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+  .or-line {
+    flex: 1;
+    height: 0.5px;
+    background: var(--card-border);
+  }
+
+  /* Submit button */
+  .btn-primary {
+    width: 100%;
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-family: var(--font);
+    font-size: 14px;
+    font-weight: 600;
+    padding: 13px;
+    cursor: pointer;
+    letter-spacing: 0.01em;
+    transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+    margin-bottom: 1.25rem;
+  }
+  .btn-primary:hover {
+    background: var(--primary-hover);
+    box-shadow: 0 4px 20px var(--primary-glow);
+  }
+  .btn-primary:active { transform: scale(0.99); }
+
+  /* Auth redirect link */
+  .auth-redirect {
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+  .auth-redirect a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+    margin-left: 4px;
+    transition: opacity 0.15s;
+  }
+  .auth-redirect a:hover { opacity: 0.8; text-decoration: underline; }
+
+  /* Forgot password */
+  .forgot-row {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: -6px;
+    margin-bottom: 4px;
+  }
+  .forgot-row a {
+    font-size: 12px;
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+    opacity: 0.85;
+    transition: opacity 0.15s;
+  }
+  .forgot-row a:hover { opacity: 1; }
+
+  /* Terms note */
+  .terms-note {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    text-align: center;
+    line-height: 1.6;
+    margin-top: -0.5rem;
+    margin-bottom: 1.25rem;
+  }
+  .terms-note a { color: var(--text-secondary); text-decoration: underline; }
+
+  /* ── LABEL ANNOTATIONS (design guide callouts) ── */
+  .annotation {
+    position: absolute;
+    font-size: 10.5px;
+    font-family: var(--font);
+    font-weight: 500;
+    background: rgba(99,102,241,0.15);
+    border: 0.5px solid rgba(99,102,241,0.4);
+    color: #a5b4fc;
+    padding: 3px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+
+<!-- TAB SWITCHER -->
+<div class="page-tabs">
+  <button class="tab-btn active" onclick="showPage('signup')">Signup Page</button>
+  <button class="tab-btn" onclick="showPage('login')">Login Page</button>
+</div>
+
+<!-- ══════════════ SIGNUP PAGE ══════════════ -->
+<div id="page-signup" class="page active">
+  <div class="auth-layout">
+
+    <!-- LEFT PANEL -->
+    <div class="auth-panel-left">
+      <div class="brand-lockup">
+        <div class="brand-icon">S</div>
+        <span class="brand-name">SpendWise</span>
+      </div>
+
+      <div class="panel-hero">
+        <h2>Start your journey to<br><span>financial clarity.</span></h2>
+        <p>Join over 50,000 users who track smarter, spend better, and save more — every single day.</p>
+      </div>
+
+      <div class="panel-stats">
+        <div class="stat-chip">
+          <div class="stat-chip-label">Avg. Saved</div>
+          <div class="stat-chip-value green">+$840</div>
+        </div>
+        <div class="stat-chip">
+          <div class="stat-chip-label">Active Users</div>
+          <div class="stat-chip-value">50k+</div>
+        </div>
+        <div class="stat-chip">
+          <div class="stat-chip-label">Budgets Set</div>
+          <div class="stat-chip-value">200k+</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT PANEL — FORM -->
+    <div class="auth-panel-right">
+      <div class="auth-form-card">
+
+        <div class="form-heading">
+          <h1>Create your account</h1>
+          <p>Fill in your details to get started for free.</p>
+        </div>
+
+        <div class="field-group">
+
+          <!-- Username -->
+          <div class="field">
+            <label for="s-username">Username</label>
+            <div class="field-input-wrap">
+              <svg class="icon" viewBox="0 0 20 20" fill="currentColor" width="15" height="15"><path d="M10 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm-7 7a7 7 0 0 1 14 0H3Z"/></svg>
+              <input type="text" id="s-username" placeholder="e.g. alex_doe" autocomplete="username">
+            </div>
+          </div>
+
+          <!-- Full Name -->
+          <div class="field">
+            <label for="s-fullname">Full Name</label>
+            <div class="field-input-wrap">
+              <svg class="icon" viewBox="0 0 20 20" fill="currentColor" width="15" height="15"><path fill-rule="evenodd" d="M10 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-7 9a7 7 0 1 1 14 0H3Z" clip-rule="evenodd"/></svg>
+              <input type="text" id="s-fullname" placeholder="Alex Johnson" autocomplete="name">
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="field">
+            <label for="s-email">Email Address</label>
+            <div class="field-input-wrap">
+              <svg class="icon" viewBox="0 0 20 20" fill="currentColor" width="15" height="15"><path d="M2.003 5.884 10 9.882l7.997-3.998A2 2 0 0 0 16 4H4a2 2 0 0 0-1.997 1.884Z"/><path d="m18 8.118-8 4-8-4V14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8.118Z"/></svg>
+              <input type="email" id="s-email" placeholder="alex@email.com" autocomplete="email">
+            </div>
+          </div>
+
+          <!-- Password -->
+          <div class="field">
+            <label for="s-password">Password</label>
+            <div class="field-input-wrap">
+              <svg class="icon" viewBox="0 0 20 20" fill="currentColor" width="15" height="15"><path fill-rule="evenodd" d="M10 1a4.5 4.5 0 0 0-4.5 4.5V9H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-.5V5.5A4.5 4.5 0 0 0 10 1Zm3 8V5.5a3 3 0 1 0-6 0V9h6Z" clip-rule="evenodd"/></svg>
+              <input type="password" id="s-password" placeholder="Min. 8 characters" autocomplete="new-password" oninput="updateStrength(this.value)">
+              <button class="eye-toggle" type="button" onclick="toggleEye('s-password', this)">
+                <svg viewBox="0 0 20 20" fill="currentColor" width="15" height="15"><path d="M10 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10ZM14 10a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z" clip-rule="evenodd"/></svg>
+              </button>
+            </div>
+            <!-- Strength bar -->
+            <div class="strength-bar" id="strength-bar">
+              <div class="strength-segment" id="seg1"></div>
+              <div class="strength-segment" id="seg2"></div>
+              <div class="strength-segment" id="seg3"></div>
+              <div class="strength-segment" id="seg4"></div>
+            </div>
+          </div>
+
+          <!-- Confirm Password -->
+          <div class="field">
+            <label for="s-confirm">Confirm Password</label>
+            <div class="field-input-wrap">
+              <svg class="icon" viewBox="0 0 20 20" fill="currentColor" width="15" height="15"><path fill-rule="evenodd" d="M10 1a4.5 4.5 0 0 0-4.5 4.5V9H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-.5V5.5A4.5 4.5 0 0 0 10 1Zm3 8V5.5a3 3 0 1 0-6 0V9h6Z" clip-rule="evenodd"/></svg>
+              <input type="password" id="s-confirm" placeholder="Re-enter your password" autocomplete="new-password">
+              <button class="eye-toggle" type="button" onclick="toggleEye('s-confirm', this)">
+                <svg viewBox="0 0 20 20" fill="currentColor" width="15" height="15"><path d="M10 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10ZM14 10a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z" clip-rule="evenodd"/></svg>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Terms -->
+        <p class="terms-note">By signing up you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.</p>
+
+        <!-- CTA -->
+        <button class="btn-primary" type="button">Create Account</button>
+
+        <!-- Redirect to Login -->
+        <div class="auth-redirect">
+          Already have an account?<a href="#" onclick="showPage('login'); return false;">Log in</a>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════ LOGIN PAGE ══════════════ -->
+<div id="page-login" class="page">
+  <div class="auth-layout">
+
+    <!-- LEFT PANEL -->
+    <div class="auth-panel-left">
+      <div class="brand-lockup">
+        <div class="brand-icon">S</div>
+        <span class="brand-name">SpendWise</span>
+      </div>
+
+      <div class="panel-hero">
+        <h2>Welcome back.<br>Your money<br><span>missed you.</span></h2>
+        <p>Sign in to pick up where you left off. Your budgets, transactions, and insights are waiting.</p>
+      </div>
+
+      <div class="panel-stats">
+        <div class="stat-chip">
+          <div class="stat-chip-label">Net Savings</div>
+          <div class="stat-chip-value green">$4,250</div>
+        </div>
+        <div class="stat-chip">
+          <div class="stat-chip-label">Days to Payday</div>
+          <div class="stat-chip-value">5 Days</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT PANEL — FORM -->
+    <div class="auth-panel-right">
+      <div class="auth-form-card">
+
+        <div class="form-heading">
+          <h1>Sign in to SpendWise</h1>
+          <p>Enter your credentials to access your dashboard.</p>
+        </div>
+
+        <div class="field-group">
+
+          <!-- Username -->
+          <div class="field">
+            <label for="l-username">Username</label>
+            <div class="field-input-wrap">
+              <svg class="icon" viewBox="0 0 20 20" fill="currentColor" width="15" height="15"><path d="M10 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm-7 7a7 7 0 0 1 14 0H3Z"/></svg>
+              <input type="text" id="l-username" placeholder="Your username" autocomplete="username">
+            </div>
+          </div>
+
+          <!-- Password -->
+          <div class="field">
+            <label for="l-password">Password</label>
+            <div class="field-input-wrap">
+              <svg class="icon" viewBox="0 0 20 20" fill="currentColor" width="15" height="15"><path fill-rule="evenodd" d="M10 1a4.5 4.5 0 0 0-4.5 4.5V9H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-.5V5.5A4.5 4.5 0 0 0 10 1Zm3 8V5.5a3 3 0 1 0-6 0V9h6Z" clip-rule="evenodd"/></svg>
+              <input type="password" id="l-password" placeholder="Your password" autocomplete="current-password">
+              <button class="eye-toggle" type="button" onclick="toggleEye('l-password', this)">
+                <svg viewBox="0 0 20 20" fill="currentColor" width="15" height="15"><path d="M10 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10ZM14 10a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z" clip-rule="evenodd"/></svg>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Forgot password -->
+        <div class="forgot-row">
+          <a href="#">Forgot password?</a>
+        </div>
+
+        <!-- Spacer -->
+        <div style="margin-bottom: 1.25rem;"></div>
+
+        <!-- CTA -->
+        <button class="btn-primary" type="button">Sign In</button>
+
+        <!-- Redirect to Signup -->
+        <div class="auth-redirect">
+          Don't have an account?<a href="#" onclick="showPage('signup'); return false;">Sign up for free</a>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    const idx = id === 'signup' ? 0 : 1;
+    document.querySelectorAll('.tab-btn')[idx].classList.add('active');
+  }
+
+  function toggleEye(inputId, btn) {
+    const input = document.getElementById(inputId);
+    const isHidden = input.type === 'password';
+    input.type = isHidden ? 'text' : 'password';
+    btn.style.color = isHidden ? 'var(--primary)' : 'var(--text-muted)';
+  }
+
+  function updateStrength(value) {
+    const segs = ['seg1','seg2','seg3','seg4'];
+    segs.forEach(s => {
+      document.getElementById(s).className = 'strength-segment';
+    });
+    let score = 0;
+    if (value.length >= 6) score++;
+    if (value.length >= 10) score++;
+    if (/[A-Z]/.test(value) && /[0-9]/.test(value)) score++;
+    if (/[^A-Za-z0-9]/.test(value)) score++;
+    const cls = score <= 1 ? 'active-weak' : score === 2 ? 'active-ok' : 'active-strong';
+    for (let i = 0; i < score; i++) {
+      document.getElementById(segs[i]).classList.add(cls);
+    }
+  }
+</script>
+</body>
+</html>
