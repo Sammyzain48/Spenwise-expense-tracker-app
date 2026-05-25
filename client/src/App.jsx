@@ -5,7 +5,7 @@ import Login from "../expense-tracker-client/pages/Login";
 import Home from "../expense-tracker-client/pages/Home";
 import Dashboard from "../expense-tracker-client/pages/Dashboard";
 import Account from "../expense-tracker-client/pages/Account";
-import RequireAuth from "../expense-tracker-client/hooks/requireAuth";
+import RequireAuth from "../expense-tracker-client/hooks/ RequireAuth";
 import TransactionsList from "../expense-tracker-client/pages/TransactionsList";
 import Sidebar from "../expense-tracker-client/components/Sidebar";
 
