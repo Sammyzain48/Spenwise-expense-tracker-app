@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { Wallet } from "lucide-react";
+import { RiLineChartLine } from "react-icons/ri";
+import { RiWalletLine } from "react-icons/ri";
+import { RiTargetLine } from "react-icons/ri";
 import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
 
@@ -159,7 +162,7 @@ const Home = () => {
           <div className="card-section flex flex-wrap justify-center items-stretch gap-5">
             <div className="card bg-[#1e293b] p-6 duration-[200ms] transiton hover:p-6 rounded-xl flex flex-col gap-4 justify-center cursor-pointer hover:shadow-[0_12px_40px_rgba(0,0,0,0.45)] w-full sm:w-[280px] border border-[#182234]">
               <div className="w-11 h-11 bg-[#0f172a] border border-[#182234] rounded-xl flex items-center justify-center text-[#6366f1] font-extrabold">
-                logo
+                <RiLineChartLine />
               </div>
               <h3 className="font-bold text-base sm:text-lg text-white">
                 Real-time Analytics
@@ -172,27 +175,27 @@ const Home = () => {
 
             <div className="card bg-[#1e293b] p-6 duration-[200ms] transiton hover:p-6 rounded-xl flex flex-col gap-4 justify-center cursor-pointer hover:shadow-[0_12px_40px_rgba(0,0,0,0.45)] w-full sm:w-[280px] border border-[#182234]">
               <div className="w-11 h-11 bg-[#0f172a] border border-[#182234] rounded-xl flex items-center justify-center text-[#6366f1] font-extrabold">
-                logo
+                <RiWalletLine />
               </div>
               <h3 className="font-bold text-base sm:text-lg text-white">
-                Bank-Grade Security
+                Budget Control
               </h3>
               <p className="text-[12px] text-[#cbd5e1]">
-                Your data is encrypted with AES-256. We never sell your personal
-                information.
+                Set monthly budgets for every category and get alerted before
+                you overspend.
               </p>
             </div>
 
             <div className="card bg-[#1e293b] p-6 duration-[200ms] transiton hover:p-6 rounded-xl flex flex-col gap-4 justify-center cursor-pointer hover:shadow-[0_12px_40px_rgba(0,0,0,0.45)] w-full sm:w-[280px] border border-[#182234]">
               <div className="w-11 h-11 bg-[#0f172a] border border-[#182234] rounded-xl flex items-center justify-center text-[#6366f1] font-extrabold">
-                logo
+                <RiTargetLine />
               </div>
               <h3 className="font-bold text-base sm:text-lg text-white">
-                Multi-Account Sync
+                Financial Goals
               </h3>
               <p className="text-[12px] text-[#cbd5e1]">
-                Connect all your cards and accounts in one place for a unified
-                overview.
+                Set savings goals and track your progress every day until you
+                hit your target.
               </p>
             </div>
           </div>
