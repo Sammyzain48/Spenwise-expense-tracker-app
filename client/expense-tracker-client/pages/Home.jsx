@@ -16,9 +16,11 @@ const Home = () => {
   function handleSignUp() {
     navigate("/signup");
   }
+
   return (
-    <div>
-      <header className="nav flex flex-row sm:flex-row sm:items-center sm:justify-between items-center justify-between gap-4 p-4 border-b border-[#182234]">
+    <div className="min-h-screen overflow-x-hidden">
+      {/* ── HEADER ── */}
+      <header className="nav flex flex-row items-center justify-between gap-4 p-4 border-b border-[#182234]">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 bg-indigo-800 rounded-lg flex items-center justify-center">
             <Wallet className="text-white text-lg" />
@@ -96,7 +98,6 @@ const Home = () => {
               >
                 Login
               </Button>
-
               <Button
                 onClick={() => {
                   setIsMenuOpen(false);
@@ -112,87 +113,81 @@ const Home = () => {
           </div>
         </div>
       </header>
-      <main>
-        <section className="hero flex justify-center items-center flex-col gap-4 my-16 sm:my-28 px-4 min-h-[60vh]">
-          <div className="hero-text mb-5 w-full max-w-2xl flex flex-col items-center justify-center">
-            <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold mb-4 text-center leading-tight">
-              Track every cent,{" "}
-              <span className="text-[#6366f1] whitespace-nowrap">
-                master your wealth.
-              </span>
-            </h1>
 
-            <p className="text-base sm:text-xl text-center">
-              <span className="block whitespace-nowrap">
-                The intuitive expense tracker designed for modern teams and
-                individuals.
-              </span>
-              <span className="block">
-                Gain clarity on your spending habits in seconds.
-              </span>
+      <main className="w-full">
+        {/* ── HERO ── */}
+        <section className="hero w-full flex justify-center items-center flex-col gap-6 py-14 sm:py-24 px-5">
+          <div className="w-full max-w-2xl flex flex-col items-center justify-center text-center gap-5">
+            <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold leading-tight">
+              Track every cent,{" "}
+              <span className="text-[#6366f1]">master your wealth.</span>
+            </h1>
+            <p className="text-sm sm:text-base text-[#94a3b8] leading-relaxed max-w-xl">
+              The intuitive expense tracker designed for modern teams and
+              individuals. Gain clarity on your spending habits in seconds.
             </p>
           </div>
 
-          <div className="hero-cta w-full flex justify-center">
-            <Button
-              background={"#6366f1"}
-              padding={16}
-              border={10}
-              textSize={18}
-              onClick={handleSignUp}
-            >
-              Start Tracking Free
-            </Button>
-          </div>
+          <Button
+            background={"#6366f1"}
+            padding={16}
+            border={10}
+            textSize={18}
+            onClick={handleSignUp}
+          >
+            Start Tracking Free
+          </Button>
         </section>
 
-        {/* features section */}
-
-        <section className="features bg-[#131c2f] px-4 sm:px-12 py-12 sm:py-16 mb-20 sm:mb-28">
-          <div className="text-center max-w-2xl mx-auto">
-            <h2 className="text-center text-2xl sm:text-3xl font-bold mb-4">
+        {/* ── FEATURES ── */}
+        <section className="features w-full bg-[#131c2f] px-5 sm:px-12 py-12 sm:py-16 mb-16 sm:mb-24">
+          <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
+            <h2 className="text-2xl sm:text-3xl font-bold mb-3">
               Everything you need to grow
             </h2>
-            <p className="text-xs sm:text-sm text-[#cbd5e1] mb-10 sm:mb-14">
+            <p className="text-xs sm:text-sm text-[#94a3b8]">
               Powerful tools to help you manage your financial health with ease.
             </p>
           </div>
 
-          <div className="card-section flex flex-wrap justify-center items-stretch gap-5">
-            <div className="card bg-[#1e293b] p-6 duration-[200ms] transiton hover:p-6 rounded-xl flex flex-col gap-4 justify-center cursor-pointer hover:shadow-[0_12px_40px_rgba(0,0,0,0.45)] w-full sm:w-[280px] border border-[#182234]">
-              <div className="w-11 h-11 bg-[#0f172a] border border-[#182234] rounded-xl flex items-center justify-center text-[#6366f1] font-extrabold">
+          <div className="flex flex-col sm:flex-row flex-wrap justify-center items-stretch gap-5">
+            {/* Card 1 */}
+            <div className="card bg-[#1e293b] p-6 rounded-xl flex flex-col gap-4 cursor-pointer hover:shadow-[0_12px_40px_rgba(0,0,0,0.45)] transition-shadow duration-200 w-full sm:w-[280px] border border-[#182234]">
+              <div className="w-11 h-11 bg-[#0f172a] border border-[#182234] rounded-xl flex items-center justify-center text-[#6366f1] text-xl">
                 <RiLineChartLine />
               </div>
               <h3 className="font-bold text-base sm:text-lg text-white">
                 Real-time Analytics
               </h3>
-              <p className="text-[12px] text-[#cbd5e1]">
+              <p className="text-[12px] text-[#94a3b8] leading-relaxed">
                 Watch your net worth grow with live updates and beautiful
                 interactive charts.
               </p>
             </div>
 
-            <div className="card bg-[#1e293b] p-6 duration-[200ms] transiton hover:p-6 rounded-xl flex flex-col gap-4 justify-center cursor-pointer hover:shadow-[0_12px_40px_rgba(0,0,0,0.45)] w-full sm:w-[280px] border border-[#182234]">
-              <div className="w-11 h-11 bg-[#0f172a] border border-[#182234] rounded-xl flex items-center justify-center text-[#6366f1] font-extrabold">
+            {/* Card 2 */}
+            <div className="card bg-[#1e293b] p-6 rounded-xl flex flex-col gap-4 cursor-pointer hover:shadow-[0_12px_40px_rgba(0,0,0,0.45)] transition-shadow duration-200 w-full sm:w-[280px] border border-[#182234]">
+              <div className="w-11 h-11 bg-[#0f172a] border border-[#182234] rounded-xl flex items-center justify-center text-[#6366f1] text-xl">
                 <RiWalletLine />
               </div>
               <h3 className="font-bold text-base sm:text-lg text-white">
                 Budget Control
               </h3>
-              <p className="text-[12px] text-[#cbd5e1]">
+              <p className="text-[12px] text-[#94a3b8] leading-relaxed">
                 Set monthly budgets for every category and get alerted before
                 you overspend.
               </p>
             </div>
 
-            <div className="card bg-[#1e293b] p-6 duration-[200ms] transiton hover:p-6 rounded-xl flex flex-col gap-4 justify-center cursor-pointer hover:shadow-[0_12px_40px_rgba(0,0,0,0.45)] w-full sm:w-[280px] border border-[#182234]">
-              <div className="w-11 h-11 bg-[#0f172a] border border-[#182234] rounded-xl flex items-center justify-center text-[#6366f1] font-extrabold">
+            {/* Card 3 */}
+            <div className="card bg-[#1e293b] p-6 rounded-xl flex flex-col gap-4 cursor-pointer hover:shadow-[0_12px_40px_rgba(0,0,0,0.45)] transition-shadow duration-200 w-full sm:w-[280px] border border-[#182234]">
+              <div className="w-11 h-11 bg-[#0f172a] border border-[#182234] rounded-xl flex items-center justify-center text-[#6366f1] text-xl">
                 <Target />
               </div>
               <h3 className="font-bold text-base sm:text-lg text-white">
                 Financial Goals
               </h3>
-              <p className="text-[12px] text-[#cbd5e1]">
+              <p className="text-[12px] text-[#94a3b8] leading-relaxed">
                 Set savings goals and track your progress every day until you
                 hit your target.
               </p>
@@ -200,16 +195,16 @@ const Home = () => {
           </div>
         </section>
 
-        {/* cta footer section */}
-        <section className="cta-footer bg-[linear-gradient(135deg,#1f2750_0%,#17203f_50%,#10182c_100%)] w-full max-w-4xl mb-20 sm:mb-28 mx-auto flex flex-col items-center gap-4 p-8 sm:p-12 rounded-2xl px-4 border border-[#182234] shadow-[0_18px_60px_rgba(0,0,0,0.35)]">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-white text-center">
-            Ready to take control?
-          </h2>
-          <p className="text-sm sm:text-base text-[#cbd5e1] text-center max-w-2xl">
-            Join over 5000 users who have transformed their financial lives with
-            <span className="text-white font-bold"> SpendWise</span>
-          </p>
-          <div className="w-full flex justify-center">
+        {/* ── CTA FOOTER ── */}
+        <section className="w-full px-5 sm:px-8 mb-16 sm:mb-24">
+          <div className="bg-[linear-gradient(135deg,#1f2750_0%,#17203f_50%,#10182c_100%)] w-full max-w-4xl mx-auto flex flex-col items-center gap-5 p-8 sm:p-12 rounded-2xl border border-[#182234] shadow-[0_18px_60px_rgba(0,0,0,0.35)]">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-white text-center">
+              Ready to take control?
+            </h2>
+            <p className="text-sm sm:text-base text-[#94a3b8] text-center max-w-lg leading-relaxed">
+              Join over 5,000 users who have transformed their financial lives
+              with <span className="text-white font-bold">SpendWise</span>
+            </p>
             <Button
               background={"#6366f1"}
               padding={16}
@@ -217,7 +212,7 @@ const Home = () => {
               textSize={18}
               onClick={handleSignUp}
             >
-              Get Started Now - It's Free
+              Get Started Now — It's Free
             </Button>
           </div>
         </section>
