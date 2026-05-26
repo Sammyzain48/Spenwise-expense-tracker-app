@@ -7,6 +7,7 @@ const Button = ({
   size,
   padding,
   shadow,
+  type = "button",
   onClick,
   stroke,
   children,

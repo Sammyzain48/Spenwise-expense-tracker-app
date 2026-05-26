@@ -147,6 +147,7 @@ const TrackerForm = ({ type, closeForm, fetchTransaction }) => {
             <button
               className="cursor-pointer h-11 rounded-xl bg-[#1e293b] border border-[#182234] text-[#e2e8f0] px-4 font-extrabold hover:border-[#6366f1] transition-colors"
               onClick={closeForm}
+              type="button"
             >
               Cancel
             </button>
@@ -157,6 +158,7 @@ const TrackerForm = ({ type, closeForm, fetchTransaction }) => {
                 padding={9}
                 border={9}
                 shadow={2}
+                type="submit"
               >
                 Add Transaction
               </Button>
