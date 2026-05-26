@@ -30,12 +30,6 @@ const Signup = () => {
       return false;
     }
 
-    if (!username.length < 3) {
-      setError("username must be greater than 3 characters");
-      setTimeout(() => setError(""), 4000);
-      return false;
-    }
-
     if (!email.trim()) {
       setError("please enter a valid email");
       setTimeout(() => setError(""), 4000);
