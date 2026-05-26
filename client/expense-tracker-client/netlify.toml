@@ -1,6 +1,6 @@
 [build]
   base = "client/expense-tracker-client"
-  publish = "client/expense-tracker-client/dist"
+  publish = "dist"
   command = "npm run build"
 
 [[redirects]]
