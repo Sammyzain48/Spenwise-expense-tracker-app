@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Wallet } from "lucide-react";
 import { RiLineChartLine } from "react-icons/ri";
 import { RiWalletLine } from "react-icons/ri";
-import { RiTargetLine } from "react-icons/ri";
+import { RiTarget2Line } from "react-icons/ri";
 import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
 
@@ -188,7 +188,7 @@ const Home = () => {
 
             <div className="card bg-[#1e293b] p-6 duration-[200ms] transiton hover:p-6 rounded-xl flex flex-col gap-4 justify-center cursor-pointer hover:shadow-[0_12px_40px_rgba(0,0,0,0.45)] w-full sm:w-[280px] border border-[#182234]">
               <div className="w-11 h-11 bg-[#0f172a] border border-[#182234] rounded-xl flex items-center justify-center text-[#6366f1] font-extrabold">
-                <RiTargetLine />
+                <RiTarget2Line />
               </div>
               <h3 className="font-bold text-base sm:text-lg text-white">
                 Financial Goals
