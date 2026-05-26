@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import useAxiosPrivate from "../api/useAxiosPrivate";
+import api from "../api/api";
 
 const Signup = () => {
   const [username, setUsername] = useState("");
@@ -10,7 +10,6 @@ const Signup = () => {
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
-  const api = useAxiosPrivate();
 
   function validate() {
     if (
