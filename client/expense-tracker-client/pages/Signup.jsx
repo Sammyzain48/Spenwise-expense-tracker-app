@@ -64,6 +64,8 @@ const Signup = () => {
       setTimeout(() => setError(""), 4000);
       return false;
     }
+
+    return true;
   }
 
   function clearError() {
