@@ -74,3 +74,27 @@ header Button:last-child {
 .amount {
   letter-spacing: 2px;
 }
+
+/* for smaller screen sizes - average phone screen */
+
+@media (max-width: 480px) {
+  .dashboard-header,
+  .transactions-page {
+    margin-top: 50px;
+    border-bottom: 0;
+  }
+
+  .form-modal .amount_category {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .add > Button {
+    width: 100%;
+  }
+
+  .transaction .info {
+    display: flex;
+    align-items: flex-start;
+  }
+}

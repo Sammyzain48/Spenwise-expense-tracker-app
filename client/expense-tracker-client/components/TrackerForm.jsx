@@ -49,7 +49,7 @@ const TrackerForm = ({ type, closeForm, fetchTransaction }) => {
   }
 
   return (
-    <div className="tracker-form w-full h-full inset-0 top-0 fixed flex justify-center items-center bg-[rgba(0,0,0,0.6)] overflow-hidden p-3 sm:p-6">
+    <div className="tracker-form w-full h-full inset-0 top-0 fixed flex justify-center items-center bg-[rgba(0,0,0,0.6)] overflow-hidden p-3 sm:p-6 sm:inset-0">
       <div className="form-modal bg-[#1e293b] w-full max-w-xl h-auto rounded-2xl shadow-xs shadow-black overflow-hidden">
         <h2 className="bg-[#222e40] p-5 sm:p-6 font-bold text-base sm:text-lg">
           Add Transaction
@@ -147,18 +147,16 @@ const TrackerForm = ({ type, closeForm, fetchTransaction }) => {
             <button
               className="cursor-pointer h-11 rounded-xl bg-[#1e293b] border border-[#182234] text-[#e2e8f0] px-4 font-extrabold hover:border-[#6366f1] transition-colors"
               onClick={closeForm}
-              type="button"
             >
               Cancel
             </button>
-            <div className="sm:ml-auto">
+            <div className="add sm:ml-auto">
               <Button
                 background={"#6366f1"}
                 textColor={"white"}
                 padding={9}
                 border={9}
                 shadow={2}
-                type="submit"
               >
                 Add Transaction
               </Button>

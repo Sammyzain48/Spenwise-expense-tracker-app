@@ -72,7 +72,7 @@ const Dashboard = () => {
 
   return (
     <div className="pt-0 sm:pt-0">
-      <header className="flex px-4 flex-col sm:flex-row sm:items-center sm:justify-between gap-3  border border-[#182234] mb-8 pl-4 sm:pl-1">
+      <header className="dashboard-header flex px-4 flex-col sm:flex-row sm:items-center sm:justify-between gap-3  border border-[#182234] mb-8 pl-4 sm:pl-1">
         <div className="flex flex-col gap-1 p-4">
           <h1 className="text-2xl font-bold">Dashboard Overview</h1>
           <p className="text-[14px]">

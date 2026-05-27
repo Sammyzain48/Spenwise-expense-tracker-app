@@ -146,12 +146,17 @@ const TransactionsList = () => {
         </div>
 
         <div className="buttons mt-6 flex flex-col sm:flex-row gap-3 sm:gap-4">
-          <button className="h-11 rounded-xl bg-[#1e293b] border border-[#182234] px-4 cursor-pointer hover:border-[#6366f1]">
+          <button
+            className="h-11 rounded-xl bg-[#1e293b] border border-[#182234] px-4 cursor-pointer hover:border-[#6366f1]"
+            onClick={() => goToPage(currentPage - 1)}
+            disabled={currentPage <= 0}
+          >
             prev
           </button>
           <button
-            onClick={() => setCurrentPage()}
             className="h-11 rounded-xl bg-[#6366f1] text-white font-extrabold px-4 cursor-pointer hover:bg-[#5557e8]"
+            onClick={() => goToPage(currentPage + 1)}
+            disabled={currentPage === totalPages}
           >
             next
           </button>
