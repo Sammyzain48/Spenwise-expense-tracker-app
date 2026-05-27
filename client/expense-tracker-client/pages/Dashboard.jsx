@@ -36,7 +36,6 @@ const Dashboard = () => {
       });
 
       if (res.data?.success) {
-        console.log(res.data);
         setTransactions(res.data.data);
       }
     } catch (error) {
