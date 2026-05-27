@@ -77,7 +77,7 @@ header Button:last-child {
 
 /* for smaller screen sizes - average phone screen */
 
-@media (max-width: 480px) {
+@media (max-width: 767px) {
   .dashboard-header,
   .transactions-page {
     margin-top: 50px;
